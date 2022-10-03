@@ -21,7 +21,7 @@ sudo ln -fs "/data/web_static/releases/test/" "/data/web_static/current"
 sudo chown -R ubuntu "/data/"
 sudo chgrp -R ubuntu "/data/"
 
-sudo sh -c 'printf %s "server {
+sudo sh -c "printf %s 'server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 	add_header X-Served_By $HOSTNAME;
@@ -42,6 +42,6 @@ sudo sh -c 'printf %s "server {
 		root /var/www/html;
 		internal;
 	}
-}" > /etc/nginx/sites-available/default'
+}' > /etc/nginx/sites-available/default"
 
 sudo service nginx restart
