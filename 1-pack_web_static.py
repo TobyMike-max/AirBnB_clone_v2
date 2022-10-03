@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-# Fabfile to generate a .tgz archive from the contents of web_static.
+"""Fabfile to generate a .tgz archive from the contents of web_static."""
 import os.path
 from datetime import datetime
-from frabic.api import local
+from fabric.api import local
 
 
 def do_pack():
