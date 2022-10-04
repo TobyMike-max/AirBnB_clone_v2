@@ -9,7 +9,7 @@ env.hosts = ["3.235.20.78", "44.201.70.161"]
 env.user = ["ubuntu"]
 
 
-def do_deploy():
+def deploy():
     """Create and distributes an archive to a web server.
     """
     path = local(do_pack())
