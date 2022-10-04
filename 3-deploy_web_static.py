@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""Fabfile to generate a .tgz archive from the contents of web_static."""
-""" Fabfile to distribute an archive to a web server."""
+"""Fabfile to generate a .tgz archive from the contents of web_static.
+    & Fabfile to distribute an archive to a web server."""
 import os.path
 from datetime import datetime
 from fabric.api import local, env, put, run
@@ -24,6 +24,7 @@ def do_pack():
     if local("tar -cvzf {} web_static".format(file)).failed is True:
         return None
     return file
+
 
 def do_deploy(archive_path):
     """Distributes an archive to a web server.
