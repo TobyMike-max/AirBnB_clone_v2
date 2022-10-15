@@ -14,7 +14,7 @@ class FileStorage:
             return FileStorage.__objects
         else:
             filter_class = {}
-            for key, val in FileStorage.__objects:
+            for key, val in FileStorage.__objects.items():
                 n_key = key.split('.', 1)
                 if cls == n_key[0]:
                     filter_class[key] = val
