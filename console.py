@@ -129,18 +129,22 @@ class HBNBCommand(cmd.Cmd):
                 if sep[1].startswith('"') and sep[1].endswith('"'):
                     # it is a string
                     params[sep[0]] = sep[1].replace('_', ' ').strip('"')
-                else if sep[1].__contains__('.'):
+                elif sep[1].__contains__('.'):
                     #it is a float
                     try:
                         if float(sep[1]):
                             params[sep[0]] = float(sep[1])
                     except Exception:
                         pass
-                else if sep[1].isnumeric():
+                else:
                     params[sep[0]] = int(sep[1])
             else:
                 return print("Wrong parameter format")
-        new_instance = HBNBCommand.classes[line[0]](**params)
+        new_instance = HBNBCommand.classes[line[0]]()
+
+        for attrName, attrValue in params.items():
+            setattr(new_instance, attrName, attrValue)
+
         print(new_instance.id)
         new_instance.save()
 
