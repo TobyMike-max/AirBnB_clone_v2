@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Script that starts a web application."""
 
-from flask import Flask, escape
+from flask import Flask
 app = Flask(__name__)
 
 
@@ -20,13 +20,15 @@ def hbnb():
 @app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
     """Return C followed by value of text variable."""
-    return ("C {}".format(escape(text)))
+    text = text.replace('_', ' ')
+    return ("C {}".format(text))
 
 
 @app.route('/python/<text>', strict_slashes=False)
 def python_str(text='is cool'):
-    """Return Python foolowed by value of text"""
-    return ("Python {}".format(escape(text)))
+    """Return Python followed by value of text"""
+    text = text.replace('_', ' ')
+    return ("Python {}".format(text))
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='5000')
