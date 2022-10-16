@@ -9,6 +9,9 @@ from models.amenity import Amenity
 from models.review import Review
 from sqlalchemy.orm import sessionmaker, scoped_session
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 class DBStorage:
     """ Class that manages storage of hbnb models in MySQL db """
@@ -17,7 +20,7 @@ class DBStorage:
 
     def __init__(self):
         """Initialize the db engine"""
-        from sqlalchemy import (create_engine)
+        from sqlalchemy import create_engine
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format(os.environ.get('HBNB_MYSQL_USER'),
                                              os.environ.get('HBNB_MYSQL_PWD'),
@@ -30,20 +33,19 @@ class DBStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        objs = []
-        if cls:
-            objs.extend(self.__session.query(cls).all())
-        else:
-            for cls in [State, City]:
-                objs.extend(self.__session.query(cls).all())
-
-        return {obj.to_dict()['__class__'] + '.' + obj.id: obj
-                for obj in objs}
+        new_dict = {}
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj
+        return (new_dict)
 
     def new(self, obj):
         """ Adds new object to the current database session """
         self.__session.add(obj)
-        # self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
     def save(self):
         """ Commit all changes of the current database session """
