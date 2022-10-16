@@ -67,3 +67,7 @@ class FileStorage:
             del FileStorage.__objects[key]
         if obj is None:
             return
+
+    def close(self):
+        """ Call reload() method for deserializing the JSON file to objects"""
+        self.reload()
