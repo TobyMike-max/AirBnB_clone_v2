@@ -71,4 +71,4 @@ class DBStorage:
         """ from models.amenity import Amenity
         from models.review import Review """
 
-        base.metadata.create_all(self.__engine)
+        Base.metadata.create_all(self.__engine)
