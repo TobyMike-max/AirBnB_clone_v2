@@ -21,7 +21,7 @@ class State(BaseModel, Base):
         """Initializes state"""
         super().__init__(*args, **kwargs)
 
-    if models.storage_t is not "db":
+    if models.storage_t != "db":
         @property
         def cities(self):
             """Getter for list of City instances related to State"""
