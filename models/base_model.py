@@ -4,9 +4,10 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-import models
+from os import getenv
 
-if models.storage_t == "db":
+
+if getenv("HBNB_TYPE_STORAGE") == "db":
     Base = declarative_base()
 else:
     Base = object
@@ -14,7 +15,7 @@ else:
 
 class BaseModel:
     """A base class for all hbnb models"""
-    if models.storage_t == "db":
+    if getenv("HBNB_TYPE_STORAGE") == "db":
         id = Column(String(60), nullable=False, primary_key=True)
         created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
         updated_at = Column(DateTime, nullable=False, default=datetime.utcnow)
