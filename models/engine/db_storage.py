@@ -9,9 +9,6 @@ from models.amenity import Amenity
 from models.review import Review
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
 
 class DBStorage:
     """ Class that manages storage of hbnb models in MySQL db """
@@ -33,14 +30,14 @@ class DBStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return (new_dict)
+        objs = []
+        if cls:
+            objs.extend(self.__session.query(cls).all())
+        else:
+            for cls in [State, City]:
+                objs.extend(self.__session.query(cls).all())
+        return {obj.to_dict()['__class__'] + '.' + obj.id: obj
+                for obj in objs}
 
     def new(self, obj):
         """ Adds new object to the current database session """
