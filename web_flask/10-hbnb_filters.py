@@ -8,7 +8,8 @@ app = Flask(__name__)
 @app.route('/hbnb_filters', strict_slashes=False)
 def filters():
     """Display a HTML page like 6-index.html"""
-    return render_template('10-hbnb_filters.html')
+    states = storage.all(State).values()
+    return render_template('10-hbnb_filters.html', states=states)
 
 
 @app.teardown_appcontext
