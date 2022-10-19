@@ -13,7 +13,7 @@ def states(state_id):
     states = storage.all(State)
     if state_id:
         state_id = 'State.' + state_id
-    render_template('9-states.html', states=states, state_id=state_id)
+    return render_template('9-states.html', states=states, state_id=state_id)
 
 
 @app.teardown_appcontext
